@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 
-router.get('/images', async (req, res) => {
+router.get('/images-unsplash', async (req, res) => {
   try {
     const unsplashBaseUrl = 'https://api.unsplash.com';
     const unsplashAccessKey = process.env.UNSPLASH_ACCESS_KEY;
