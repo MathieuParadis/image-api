@@ -14,7 +14,7 @@ router.get('/images-pixabay', async (req, res) => {
     const photos = response.data;
     res.json(photos);
   } catch (error) {
-    console.error('Error fetching photos from Pixabay:', error);
+    console.error('Error while fetching photos from Pixabay:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
