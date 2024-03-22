@@ -11,8 +11,6 @@ router.get('/images-pixabay', async (req, res) => {
     const response = await axios.get(`${pixabayBaseUrl}key=${pixabayApiKey}`, {
     });
 
-    // const images = response.data
-
     const images = response.data.hits.map(img => ({
       image_ID: img.id,
       thumbnails: img.previewURL,
