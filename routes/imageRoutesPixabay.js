@@ -9,6 +9,9 @@ router.get('/images-pixabay', async (req, res) => {
     const pixabayApiKey = process.env.PIXABAY_API_KEY;
 
     const response = await axios.get(`${pixabayBaseUrl}key=${pixabayApiKey}`, {
+      params: {
+        q: 'man'
+      }
     });
 
     const images = response.data.hits.map(img => ({
