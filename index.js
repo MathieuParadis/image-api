@@ -8,8 +8,8 @@ const imageRoutes = require('./routes/imageRoutes');
 const app = express();
 app.use(bodyParser.json());
 
-// app.use('/api', imageRoutesUnplash);
-// app.use('/api', imageRoutesPixabay);
+app.use('/api', imageRoutesUnplash);
+app.use('/api', imageRoutesPixabay);
 app.use('/api', imageRoutesStoryblocks);
 app.use('/api', imageRoutes);
 

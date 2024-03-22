@@ -16,6 +16,7 @@ router.get('/images', async (req, res) => {
     const storyblocksProjectId = process.env.STORYBLOCKS_PROJECT_ID;
     const storyblocksUserId = process.env.STORYBLOCKS_USER_ID;
 
+    // Create promises for each API call
     const unsplashPromise = axios.get(`${unsplashBaseUrl}/search/photos`, {
       params: { count: 10, query: 'man' },
       headers: { Authorization: `Client-ID ${unsplashAccessKey}` }
@@ -41,27 +42,9 @@ router.get('/images', async (req, res) => {
       }
     });
 
-    let unsplashResponse, pixabayResponse, storyblocksResponse;
+    const [unsplashResponse, pixabayResponse, storyblocksResponse] = await Promise.allSettled([unsplashPromise, pixabayPromise, storyblocksPromise]);
 
-    try {
-      unsplashResponse = await unsplashPromise;
-    } catch (error) {
-      console.error('Error while fetching images from Unsplash:', error);
-    }
-
-    try {
-      pixabayResponse = await pixabayPromise;
-    } catch (error) {
-      console.error('Error while fetching images from Pixabay:', error);
-    }
-
-    try {
-      storyblocksResponse = await storyblocksPromise;
-    } catch (error) {
-      console.error('Error while fetching images from Storyblocks:', error);
-    }
-
-    const unsplashImages = (unsplashResponse && unsplashResponse.data.results) ? unsplashResponse.data.results.map(img => ({
+    const unsplashImages = (unsplashResponse.status === 'fulfilled') ? unsplashResponse.value.data.results.map(img => ({
       image_ID: img.id,
       thumbnails: img.urls.thumb,
       preview: img.urls.regular,
@@ -70,7 +53,7 @@ router.get('/images', async (req, res) => {
       tags: img.tags.map(tag => tag.title)
     })) : [];
 
-    const pixabayImages = (pixabayResponse && pixabayResponse.data.hits) ? pixabayResponse.data.hits.map(img => ({
+    const pixabayImages = (pixabayResponse.status === 'fulfilled') ? pixabayResponse.value.data.hits.map(img => ({
       image_ID: img.id,
       thumbnails: img.previewURL,
       preview: img.largeImageURL,
@@ -79,7 +62,7 @@ router.get('/images', async (req, res) => {
       tags: img.tags
     })) : [];
 
-    const storyblocksImages = (storyblocksResponse && storyblocksResponse.data.results) ? storyblocksResponse.data.results.map(img => ({
+    const storyblocksImages = (storyblocksResponse.status === 'fulfilled') ? storyblocksResponse.value.data.results.map(img => ({
       image_ID: img.id,
       thumbnails: img.thumbnail_url,
       preview: img.preview_url,

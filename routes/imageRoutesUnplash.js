@@ -18,7 +18,6 @@ router.get('/images-unsplash', async (req, res) => {
       }
     });
 
-    // const images = response.data.results
     const images = response.data.results.map(img => ({
       image_ID: img.id,
       thumbnails: img.urls.thumb,
