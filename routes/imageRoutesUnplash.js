@@ -17,7 +17,7 @@ router.get('/images-unsplash', async (req, res) => {
     const photos = response.data;
     res.json(photos);
   } catch (error) {
-    console.error('Error fetching photos from Unsplash:', error);
+    console.error('Error while fetching photos from Unsplash:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
