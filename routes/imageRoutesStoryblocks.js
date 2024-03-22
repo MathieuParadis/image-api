@@ -34,12 +34,18 @@ router.get('/images-storyblocks', async (req, res) => {
       }
     });
 
-    console.log('Response from Storyblocks API:', response.data);
+    const images = response.data.results.map(img => ({
+      image_ID: img.id,
+      thumbnails: img.thumbnail_url,
+      preview: img.preview_url,
+      title: img.title,
+      source: 'Storyblocks',
+      tags: img.tags
+    }));
 
-    const images = response.data;
     res.json(images);
   } catch (error) {
-    console.error('Error while fetching photos from Storyblocks:', error);
+    console.error('Error while fetching images from Storyblocks:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });

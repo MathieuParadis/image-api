@@ -11,10 +11,18 @@ router.get('/images-pixabay', async (req, res) => {
     const response = await axios.get(`${pixabayBaseUrl}key=${pixabayApiKey}`, {
     });
 
-    const photos = response.data;
-    res.json(photos);
+    const images = response.data.hits.map(img => ({
+      image_ID: img.id,
+      thumbnails: img.previewURL,
+      preview: img.largeImageURL,
+      title: null,
+      source: 'Pixabay',
+      tags: img.tags
+    }));
+
+    res.json(images)
   } catch (error) {
-    console.error('Error while fetching photos from Pixabay:', error);
+    console.error('Error while fetching images from Pixabay:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });

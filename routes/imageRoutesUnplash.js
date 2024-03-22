@@ -14,10 +14,18 @@ router.get('/images-unsplash', async (req, res) => {
       }
     });
 
-    const photos = response.data;
-    res.json(photos);
+    const images = response.data.map(img => ({
+      image_ID: img.id,
+      thumbnails: img.urls.thumb,
+      preview: img.urls.regular,
+      title: img.alt_description,
+      source: 'Unsplash',
+      tags: []
+    }));
+
+    res.json(images);
   } catch (error) {
-    console.error('Error while fetching photos from Unsplash:', error);
+    console.error('Error while fetching images from Unsplash:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
