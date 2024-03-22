@@ -16,14 +16,17 @@ router.get('/images', async (req, res) => {
     const storyblocksProjectId = process.env.STORYBLOCKS_PROJECT_ID;
     const storyblocksUserId = process.env.STORYBLOCKS_USER_ID;
 
+    // Get the search keyword from the query parameter
+    const searchKeyword = req.query.q || 'man';
+
     // Create promises for each API call
     const unsplashPromise = axios.get(`${unsplashBaseUrl}/search/photos`, {
-      params: { count: 10, query: 'man' },
+      params: { count: 50, query: searchKeyword },
       headers: { Authorization: `Client-ID ${unsplashAccessKey}` }
     });
 
     const pixabayPromise = axios.get(`${pixabayBaseUrl}key=${pixabayApiKey}`, {
-      params: { q: 'man' }
+      params: { per_page: 50, q: searchKeyword }
     });
 
     const expires = Math.floor(Date.now() / 1000) + 100;
@@ -38,10 +41,12 @@ router.get('/images', async (req, res) => {
         HMAC: hmac,
         project_id: storyblocksProjectId,
         user_id: storyblocksUserId,
-        keywords: 'men'
+        keywords: searchKeyword,
+        results_per_page: 50
       }
     });
 
+    // Wait for all promises to resolve using Promise.allSettled()
     const [unsplashResponse, pixabayResponse, storyblocksResponse] = await Promise.allSettled([unsplashPromise, pixabayPromise, storyblocksPromise]);
 
     const unsplashImages = (unsplashResponse.status === 'fulfilled') ? unsplashResponse.value.data.results.map(img => ({
