@@ -29,9 +29,11 @@ The Image Aggregator API is a Node.js application that aggregates images from mu
 
 ## Usage
 To start the server, run:
+
     ```
     npm start
     ```
+
 The server will start running on port 3000 by default. You can then access the API endpoints to fetch images.
 
 ### API Endpoints
