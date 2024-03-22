@@ -13,8 +13,7 @@ router.get('/images-unsplash', async (req, res) => {
         Authorization: `Client-ID ${unsplashAccessKey}`
       }
     });
-    // const images = response.data
-    // Transform each element of the images array directly
+
     const images = response.data.map(img => ({
       image_ID: img.id,
       thumbnails: img.urls.thumb,
@@ -23,13 +22,6 @@ router.get('/images-unsplash', async (req, res) => {
       source: 'Unsplash',
       tags: []
     }));
-
-//     image_ID: String, ​the ID of the image
-// thumbnails: String, ​thumbnails url of the image
-// preview: String, ​preview url of the image
-// title: String, ​preview url from the image
-// source: String, ​which image library you get this image from? [Unsplash, Storyblocks, Pixabay]
-// tags: Array ​the tag/keywords of the images (if any)
 
     res.json(images);
   } catch (error) {
