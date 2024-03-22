@@ -30,7 +30,8 @@ router.get('/images-storyblocks', async (req, res) => {
         EXPIRES: expires,
         HMAC: hmac,
         project_id: storyblocksProjectId,
-        user_id: storyblocksUserId
+        user_id: storyblocksUserId,
+        keywords: 'men'
       }
     });
 
