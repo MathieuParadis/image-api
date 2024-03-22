@@ -29,13 +29,8 @@ The Image Aggregator API is a Node.js application that aggregates images from mu
 
 ## Usage
 To start the server, run:
-    ```env
-    UNSPLASH_ACCESS_KEY=your_unsplash_access_key
-    PIXABAY_API_KEY=your_pixabay_api_key
-    STORYBLOCKS_PUBLIC_KEY=your_storyblocks_public_key
-    STORYBLOCKS_PRIVATE_KEY=your_storyblocks_private_key
-    STORYBLOCKS_PROJECT_ID=your_storyblocks_project_id
-    STORYBLOCKS_USER_ID=your_storyblocks_user_id
+    ```
+    npm start
     ```
 The server will start running on port 3000 by default. You can then access the API endpoints to fetch images.
 
